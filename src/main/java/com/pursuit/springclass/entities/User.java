@@ -1,12 +1,16 @@
 package com.pursuit.springclass.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name="tb_user")
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +20,10 @@ public class User {
     private String phone;
     private String password;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
+
     public User() {}
 
     public User(Long id, String name, String email, String phone, String password) {
@@ -24,6 +32,7 @@ public class User {
         this.email = email;
         this.phone = phone;
         this.password = password;
+        this.orders = new ArrayList<>();
     }
 
     public Long getId() {
@@ -64,6 +73,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Order> getOrders() {
+        return this.orders;
     }
 
     @Override
