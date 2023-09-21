@@ -16,6 +16,7 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private UserRepository userRepository;
 
+    // database seeding
     @Override
     public void run(String... args) throws Exception {
         User user1 = new User(null, "Ronaldo Fenomeno", "ronaldo@gmail.com", "229869584", "123321");
