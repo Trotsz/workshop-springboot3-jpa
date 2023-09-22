@@ -1,8 +1,10 @@
 package com.pursuit.springclass.config;
 
+import com.pursuit.springclass.entities.Category;
 import com.pursuit.springclass.entities.Order;
 import com.pursuit.springclass.entities.User;
 import com.pursuit.springclass.entities.enums.OrderStatus;
+import com.pursuit.springclass.repositories.CategoryRepository;
 import com.pursuit.springclass.repositories.OrderRepository;
 import com.pursuit.springclass.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     // database seeding
     @Override
     public void run(String... args) throws Exception {
@@ -33,7 +38,11 @@ public class TestConfig implements CommandLineRunner {
         Order order2 = new Order(null, Instant.now(), user1, OrderStatus.WAITING_PAYMENT);
         Order order3 = new Order(null, Instant.now(), user2, OrderStatus.WAITING_PAYMENT);
 
+        Category cat1 = new Category(null, "Electronics");
+        Category cat2 = new Category(null, "Utilities");
+
         this.userRepository.saveAll(Arrays.asList(user1, user2));
         this.orderRepository.saveAll(Arrays.asList(order1, order2, order3));
+        this.categoryRepository.saveAll(Arrays.asList(cat1, cat2));
     }
 }
