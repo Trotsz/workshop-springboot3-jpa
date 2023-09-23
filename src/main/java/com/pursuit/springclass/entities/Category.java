@@ -1,9 +1,12 @@
 package com.pursuit.springclass.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_category")
@@ -14,14 +17,16 @@ public class Category implements Serializable {
     private Long id;
     private String name;
 
-    // @ManyToMany
-    // private Product product
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categories")
+    private Set<Product> products;
 
     public Category() {}
 
     public Category(Long id, String name) {
         this.id = id;
         this.name = name;
+        this.products = new HashSet<>();
     }
 
     public Long getId() {

@@ -1,12 +1,15 @@
 package com.pursuit.springclass.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pursuit.springclass.entities.enums.OrderStatus;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -27,6 +30,11 @@ public class Order implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
+    // TODO: Implement relation between Order and Product
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "order")
+//    private List<Product> products;
+
     public Order() {}
 
     public Order(Long id, Instant moment, User user, OrderStatus orderStatus) {
@@ -34,6 +42,7 @@ public class Order implements Serializable {
         this.moment = moment;
         this.user = user;
         this.setOrderStatus(orderStatus);
+        // this.products = new ArrayList<>();
     }
 
     public Long getId() {
