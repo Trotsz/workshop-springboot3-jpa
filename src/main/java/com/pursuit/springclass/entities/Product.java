@@ -107,12 +107,4 @@ public class Product {
         Product product = (Product) o;
         return Objects.equals(id, product.id);
     }
-
-    @Override
-    public String toString() {
-        return String.format(
-            "Id: %d, Name: %s, Description: %s, Price: %.2f, Image-Url: %s",
-            this.getId(), this.getName(), this.getDescription(), this.getPrice(), this.getImageUrl()
-        );
-    }
 }

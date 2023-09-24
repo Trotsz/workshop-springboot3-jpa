@@ -7,16 +7,13 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_order")
 public class Order implements Serializable {
-    private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss");
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,6 +27,9 @@ public class Order implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> orderItems;
+
     // TODO: Implement relation between Order and Product
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "order")
@@ -42,6 +42,7 @@ public class Order implements Serializable {
         this.moment = moment;
         this.user = user;
         this.setOrderStatus(orderStatus);
+        this.orderItems = new HashSet<>();
         // this.products = new ArrayList<>();
     }
 
@@ -69,6 +70,10 @@ public class Order implements Serializable {
         if(orderStatus != null) this.orderStatus = orderStatus.getCode();
     }
 
+    public Set<OrderItem> getOrderItems() {
+        return this.orderItems;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hashCode(this.id);
@@ -80,10 +85,5 @@ public class Order implements Serializable {
         if(other == null || this.getClass() != other.getClass()) return false;
 
         return this.getId().equals(((Order) other).getId());
-    }
-
-    @Override
-    public String toString() {
-        return "Id: " + this.getId() + ", Moment: " + fmt.format(this.getMoment());
     }
 }

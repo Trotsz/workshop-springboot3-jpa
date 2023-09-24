@@ -57,9 +57,4 @@ public class Category implements Serializable {
 
         return this.getId().equals(((Category) other).getId());
     }
-
-    @Override
-    public String toString() {
-        return "Id: " + this.getId() + ", Name: " + this.getName();
-    }
 }

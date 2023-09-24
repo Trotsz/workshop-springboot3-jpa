@@ -1,14 +1,8 @@
 package com.pursuit.springclass.config;
 
-import com.pursuit.springclass.entities.Category;
-import com.pursuit.springclass.entities.Order;
-import com.pursuit.springclass.entities.Product;
-import com.pursuit.springclass.entities.User;
+import com.pursuit.springclass.entities.*;
 import com.pursuit.springclass.entities.enums.OrderStatus;
-import com.pursuit.springclass.repositories.CategoryRepository;
-import com.pursuit.springclass.repositories.OrderRepository;
-import com.pursuit.springclass.repositories.ProductRepository;
-import com.pursuit.springclass.repositories.UserRepository;
+import com.pursuit.springclass.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +26,9 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     // database seeding
     @Override
@@ -61,5 +58,11 @@ public class TestConfig implements CommandLineRunner {
         prod2.getCategories().add(cat2);
 
         this.productRepository.saveAll(Arrays.asList(prod1, prod2));
+
+        OrderItem orderItem1 = new OrderItem(order1, prod1, 3, prod1.getPrice());
+        OrderItem orderItem2 = new OrderItem(order2, prod1, 1, prod1.getPrice());
+        OrderItem orderItem3 = new OrderItem(order1, prod2, 2, prod2.getPrice());
+
+        this.orderItemRepository.saveAll(Arrays.asList(orderItem1, orderItem2, orderItem3));
     }
 }
