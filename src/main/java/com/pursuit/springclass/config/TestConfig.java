@@ -30,13 +30,16 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private OrderItemRepository orderItemRepository;
 
+    @Autowired
+    private PaymentRepository paymentRepository;
+
     // database seeding
     @Override
     public void run(String... args) throws Exception {
         User user1 = new User(null, "Ronaldo Fenomeno", "ronaldo@gmail.com", "229869584", "123321");
         User user2 = new User(null, "Maria Julia", "maria@gmail.com", "22949139043", "1234323");
 
-        Order order1 = new Order(null, Instant.now(), user1, OrderStatus.WAITING_PAYMENT);
+        Order order1 = new Order(null, Instant.now(), user1, OrderStatus.PAID);
         Order order2 = new Order(null, Instant.now(), user1, OrderStatus.WAITING_PAYMENT);
         Order order3 = new Order(null, Instant.now(), user2, OrderStatus.WAITING_PAYMENT);
 
@@ -64,5 +67,10 @@ public class TestConfig implements CommandLineRunner {
         OrderItem orderItem3 = new OrderItem(order1, prod2, 2, prod2.getPrice());
 
         this.orderItemRepository.saveAll(Arrays.asList(orderItem1, orderItem2, orderItem3));
+
+        Payment payment1 = new Payment(null, Instant.now(), order1);
+        order1.setPayment(payment1);
+
+        this.orderRepository.save(order1);
     }
 }

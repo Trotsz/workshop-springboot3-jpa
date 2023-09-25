@@ -29,10 +29,9 @@ public class Order implements Serializable {
     @OneToMany(mappedBy = "id.order")
     private Set<OrderItem> orderItems;
 
-    // TODO: Implement relation between Order and Product
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "order")
-//    private List<Product> products;
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
 
     public Order() {}
 
@@ -42,7 +41,6 @@ public class Order implements Serializable {
         this.user = user;
         this.setOrderStatus(orderStatus);
         this.orderItems = new HashSet<>();
-        // this.products = new ArrayList<>();
     }
 
     public Long getId() {
@@ -71,6 +69,14 @@ public class Order implements Serializable {
 
     public Set<OrderItem> getOrderItems() {
         return this.orderItems;
+    }
+
+    public Payment getPayment() {
+        return this.payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     @Override
