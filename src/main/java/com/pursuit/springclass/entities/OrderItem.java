@@ -2,9 +2,7 @@ package com.pursuit.springclass.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pursuit.springclass.entities.pk.OrderItemPK;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;

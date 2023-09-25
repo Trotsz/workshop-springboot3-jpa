@@ -1,6 +1,5 @@
 package com.pursuit.springclass.entities.pk;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pursuit.springclass.entities.Order;
 import com.pursuit.springclass.entities.Product;
 import jakarta.persistence.Embeddable;

@@ -1,7 +1,6 @@
 package com.pursuit.springclass.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pursuit.springclass.entities.enums.OrderStatus;
 import jakarta.persistence.*;
 

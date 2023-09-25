@@ -1,5 +1,6 @@
 package com.pursuit.springclass.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -27,9 +28,8 @@ public class Product {
     )
     private Set<Category> categories;
 
-//    @ManyToOne
-//    @JoinColumn(name = "order_id")
-//    private Order order;
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> orderItems;
 
     public Product() {}
 
@@ -40,6 +40,7 @@ public class Product {
         this.price = price;
         this.imageUrl = imageUrl;
         this.categories = new HashSet<>();
+        this.orderItems = new HashSet<>();
         // this.order = order;
     }
 
@@ -87,13 +88,16 @@ public class Product {
         return this.categories;
     }
 
-//    public Order getOrder() {
-//        return this.order;
-//    }
-//
-//    public void setOrder(Order order) {
-//        this.order = order;
-//    }
+    @JsonIgnore
+    public Set<Order> getOrders() {
+        Set<Order> orders = new HashSet<>();
+
+        for(OrderItem orderItem : this.orderItems) {
+            orders.add(orderItem.getOrder());
+        }
+
+        return orders;
+    }
 
     @Override
     public int hashCode() {
