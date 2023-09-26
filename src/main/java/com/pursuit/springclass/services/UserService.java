@@ -23,4 +23,9 @@ public class UserService {
 
         return obj.isPresent() ? obj.get() : null;
     }
+
+    public User insert(User obj) {
+        User user = this.userRepository.save(obj);
+        return user;
+    }
 }
