@@ -2,6 +2,9 @@ package com.pursuit.springclass.services;
 
 import com.pursuit.springclass.entities.User;
 import com.pursuit.springclass.repositories.UserRepository;
+import com.pursuit.springclass.resources.exceptions.ResourceExceptionHandler;
+import com.pursuit.springclass.services.exceptions.ResourceNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +24,7 @@ public class UserService {
     public User findById(Long id) {
         Optional<User> obj = this.userRepository.findById(id);
 
-        return obj.isPresent() ? obj.get() : null;
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public User insert(User obj) {

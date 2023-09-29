@@ -2,6 +2,7 @@ package com.pursuit.springclass.resources;
 
 import com.pursuit.springclass.entities.User;
 import com.pursuit.springclass.services.UserService;
+import com.pursuit.springclass.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
