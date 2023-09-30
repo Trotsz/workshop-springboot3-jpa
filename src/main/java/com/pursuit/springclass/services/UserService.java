@@ -2,16 +2,11 @@ package com.pursuit.springclass.services;
 
 import com.pursuit.springclass.entities.User;
 import com.pursuit.springclass.repositories.UserRepository;
-import com.pursuit.springclass.resources.exceptions.ResourceExceptionHandler;
 import com.pursuit.springclass.services.exceptions.DatabaseException;
 import com.pursuit.springclass.services.exceptions.ResourceNotFoundException;
-import jakarta.persistence.PersistenceException;
-import jakarta.servlet.http.HttpServletRequest;
-import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
-import org.hibernate.exception.ConstraintViolationException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,9 +45,13 @@ public class UserService {
     }
 
     public User update(Long id, User obj) {
-        User user = this.userRepository.getReferenceById(id);
-        this.updateData(user, obj);
-        return this.userRepository.save(user);
+        try {
+            User user = this.userRepository.getReferenceById(id);
+            this.updateData(user, obj);
+            return this.userRepository.save(user);
+        } catch(EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     private void updateData(User user, User obj) {
